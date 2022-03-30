@@ -27,4 +27,21 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const { name, quantity } = req.body;
+    const nameTest = await productService.getByName(name);
+  
+    if (nameTest.length > 0) {
+      return res.status(409).json({ message: 'Product already exists' });
+    }
+  
+    const result = await productService.create(name, quantity);
+    return res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
 module.exports = router;
