@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const saleService = require('../services/saleService');
+const saleValidation = require('../middlewares/saleValidation');
 
 router.get('/', async (_req, res) => {
   try {
@@ -27,7 +28,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', saleValidation, async (req, res) => {
   try {
     const buys = req.body;
     
