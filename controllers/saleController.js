@@ -27,4 +27,16 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const buys = req.body;
+    
+    const result = await saleService.buy(buys);
+    return res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
 module.exports = router;
