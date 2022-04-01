@@ -40,4 +40,18 @@ router.post('/', saleValidation, async (req, res) => {
   }
 });
 
+router.put('/:id', saleValidation, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [{ productId, quantity }] = req.body;
+
+    const result = await saleService.update(id, productId, quantity);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
 module.exports = router;

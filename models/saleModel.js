@@ -44,5 +44,20 @@ const buyProduct = async (id, productId, quantity) => {
   await connection.execute(`INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
   VALUES (?, ?, ?);`, [id, productId, quantity]);
 };
+
+const update = async (id, productId, quantity) => {
+  await connection.execute(`UPDATE StoreManager.sales_products
+  SET product_id = ?, quantity = ?
+  WHERE sale_id = ?;`, [productId, quantity, id]);
+  return {
+    saleId: id,
+    itemUpdated: [
+      {
+        productId,
+        quantity,
+      },
+    ],
+  };
+};
   
-module.exports = { getAll, getById, buy, buyProduct };
+module.exports = { getAll, getById, buy, buyProduct, update };
