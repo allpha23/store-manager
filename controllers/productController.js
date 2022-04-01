@@ -15,13 +15,13 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const products = await productService.getById(id);
+    const product = await productService.getById(id);
 
-    if (!products) {
+    if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    return res.status(200).json(products);
+    return res.status(200).json(product);
   } catch (error) {
     console.log(error);
     res.status(500).end();
@@ -50,15 +50,33 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { name, quantity } = req.body;
 
-    const products = await productService.getById(id);
+    const product = await productService.getById(id);
 
-    if (!products) {
+    if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
     const result = await productService.update(id, name, quantity);
 
     return res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await productService.getById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    await productService.deleteById(id);
+
+    return res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).end();
