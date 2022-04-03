@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const productController = require('./controllers/productController');
-const saleController = require('./controllers/saleController');
+const productRoutes = require('./Routes/ProductRoutes');
+const saleRoutes = require('./Routes/saleRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -12,8 +12,8 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use('/products', productController);
-app.use('/sales', saleController);
+app.use('/products', productRoutes);
+app.use('/sales', saleRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);

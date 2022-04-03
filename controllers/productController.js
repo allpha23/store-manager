@@ -1,8 +1,6 @@
-const router = require('express').Router();
 const productService = require('../services/productService');
-const productValidation = require('../middlewares/productValidation');
 
-router.get('/', async (req, res) => {
+const get = async (_req, res) => {
   try {
     const products = await productService.getAll();
     return res.status(200).json(products);  
@@ -10,9 +8,9 @@ router.get('/', async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.get('/:id', async (req, res) => {
+const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productService.getById(id);
@@ -26,9 +24,9 @@ router.get('/:id', async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.post('/', productValidation, async (req, res) => {
+const post = async (req, res) => {
   try {
     const { name, quantity } = req.body;
     const nameTest = await productService.getByName(name);
@@ -43,9 +41,9 @@ router.post('/', productValidation, async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.put('/:id', async (req, res) => {
+const put = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, quantity } = req.body;
@@ -63,9 +61,9 @@ router.put('/:id', async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.delete('/:id', async (req, res) => {
+const deleteById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productService.getById(id);
@@ -81,6 +79,6 @@ router.delete('/:id', async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-module.exports = router;
+module.exports = { get, getById, post, put, deleteById };

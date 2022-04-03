@@ -1,8 +1,6 @@
-const router = require('express').Router();
 const saleService = require('../services/saleService');
-const saleValidation = require('../middlewares/saleValidation');
 
-router.get('/', async (_req, res) => {
+const get = async (_req, res) => {
   try {
     const sale = await saleService.getAll();
     return res.status(200).json(sale);
@@ -10,9 +8,9 @@ router.get('/', async (_req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.get('/:id', async (req, res) => {
+const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const sale = await saleService.getById(id);
@@ -26,9 +24,9 @@ router.get('/:id', async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.post('/', saleValidation, async (req, res) => {
+const post = async (req, res) => {
   try {
     const buys = req.body;
     
@@ -38,9 +36,9 @@ router.post('/', saleValidation, async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-router.put('/:id', saleValidation, async (req, res) => {
+const put = async (req, res) => {
   try {
     const { id } = req.params;
     const [{ productId, quantity }] = req.body;
@@ -52,6 +50,6 @@ router.put('/:id', saleValidation, async (req, res) => {
     console.log(error);
     res.status(500).end();
   }
-});
+};
 
-module.exports = router;
+module.exports = { get, getById, post, put };
