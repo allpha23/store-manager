@@ -1,7 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const ProductsServices = require('../../../services/productService');
-const ProductModel = require('../../../models/productModel');
 const ProductController = require('../../../controllers/productController');
 
 const fakeProduct = [
